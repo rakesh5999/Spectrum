@@ -2,16 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../hook/useAuth";
 
-export const Register = () => {
+const Login = () => {
   const navigate = useNavigate();
-  const { handleRegister } = useAuth();
+  const { handleLogin } = useAuth();
 
   const [formData, setFormData] = useState({
-    fullname: "",
     email: "",
-    contact: "",
     password: "",
-    isSeller: false,
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -20,35 +17,29 @@ export const Register = () => {
   const [successMsg, setSuccessMsg] = useState("");
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSuccessMsg("");
     setAuthError("");
+    setSuccessMsg("");
 
     try {
       setLoading(true);
-      await handleRegister({
-        fullname: formData.fullname.trim(),
+      await handleLogin({
         email: formData.email.trim(),
-        contact: formData.contact.trim(),
         password: formData.password,
-        isSeller: formData.isSeller,
       });
-      setSuccessMsg("Account created successfully! Welcome to Rewoven.");
+      setSuccessMsg("Welcome back! Redirecting...");
       setTimeout(() => navigate("/"), 1200);
     } catch (err) {
       const msg =
         err.response?.data?.errors?.[0]?.msg ||
         err.response?.data?.message ||
         err.message ||
-        "Registration failed";
+        "Login failed. Please try again.";
       setAuthError(msg);
     } finally {
       setLoading(false);
@@ -77,25 +68,25 @@ export const Register = () => {
 
         <div className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm text-zinc-400">
           <span className="hidden sm:inline font-light text-zinc-400">
-            Already have an account?
+            New to Rewoven?
           </span>
           <a
-            href="/login"
+            href="/register"
             className="text-zinc-200 hover:text-[#FACC15] font-medium transition-colors duration-200 border-b border-transparent hover:border-[#FACC15] pb-0.5"
           >
-            Sign in
+            Create account
           </a>
         </div>
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 flex items-center justify-center py-2 sm:py-4 px-3 sm:px-6 lg:px-8 z-10 min-h-0">
+      <main className="flex-1 flex items-center justify-center py-6 sm:py-8 px-3 sm:px-6 lg:px-8 z-10 min-h-0">
         <div className="w-full max-w-6xl my-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 xl:gap-8 items-stretch">
-            
-            {/* LEFT COLUMN: Editorial Showcase (Visible on Desktop / Large Screens) */}
+
+            {/* LEFT COLUMN: Editorial Showcase (Desktop only) */}
             <div className="hidden lg:flex lg:col-span-5 flex-col justify-between relative rounded-2xl overflow-hidden border border-zinc-800/80 bg-gradient-to-b from-[#121216]/90 via-[#101013] to-[#09090b] p-5 xl:p-6 shadow-2xl group">
-              {/* Background Editorial Visual with gradient mask */}
+              {/* Background Editorial Visual */}
               <div className="absolute inset-0 z-0">
                 <img
                   src="/rewoven_editorial.jpg"
@@ -113,14 +104,14 @@ export const Register = () => {
                   SS / 2026 Collection
                 </div>
                 <h2 className="text-2xl xl:text-3xl font-semibold tracking-tight text-white font-['Outfit'] leading-[1.2]">
-                  The New Standard in Conscious Fashion.
+                  Welcome back to conscious fashion.
                 </h2>
                 <p className="text-xs text-zinc-300/90 mt-2 leading-relaxed font-light line-clamp-2">
-                  Join a discerning community of collectors, independent designers, and modern wardrobe minimalists.
+                  Sign in to explore your curated wardrobe, track orders, and discover the latest independent labels.
                 </p>
               </div>
 
-              {/* Feature Highlights Pills */}
+              {/* Feature Highlights */}
               <div className="relative z-10 my-4 space-y-2.5">
                 <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-zinc-900/70 backdrop-blur-md border border-zinc-800/60 text-xs text-zinc-300">
                   <div className="w-7 h-7 rounded-lg bg-[#FACC15]/10 text-[#FACC15] flex items-center justify-center shrink-0 border border-[#FACC15]/20">
@@ -130,19 +121,19 @@ export const Register = () => {
                   </div>
                   <div>
                     <span className="font-medium text-white block text-xs">Curated Independent Labels</span>
-                    <span className="text-zinc-400 text-[10px]">Handcrafted silhouettes & bespoke tailoring.</span>
+                    <span className="text-zinc-400 text-[10px]">Handcrafted silhouettes &amp; bespoke tailoring.</span>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-zinc-900/70 backdrop-blur-md border border-zinc-800/60 text-xs text-zinc-300">
                   <div className="w-7 h-7 rounded-lg bg-[#FACC15]/10 text-[#FACC15] flex items-center justify-center shrink-0 border border-[#FACC15]/20">
                     <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
                   </div>
                   <div>
-                    <span className="font-medium text-white block text-xs">Merchant & Seller Studio</span>
-                    <span className="text-zinc-400 text-[10px]">List your clothes & scale your global audience.</span>
+                    <span className="font-medium text-white block text-xs">Secure &amp; Private</span>
+                    <span className="text-zinc-400 text-[10px]">Your data is encrypted and never shared.</span>
                   </div>
                 </div>
               </div>
@@ -163,26 +154,26 @@ export const Register = () => {
               </div>
             </div>
 
-            {/* RIGHT COLUMN: Registration Form Canvas */}
+            {/* RIGHT COLUMN: Login Form */}
             <div className="lg:col-span-7 flex flex-col justify-center">
-              <div className="bg-[#121215]/85 backdrop-blur-2xl border border-zinc-800/70 rounded-2xl p-4 sm:p-6 lg:p-6 xl:p-7 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] transition-all duration-300">
-                
+              <div className="bg-[#121215]/85 backdrop-blur-2xl border border-zinc-800/70 rounded-2xl p-5 sm:p-7 lg:p-8 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8)] transition-all duration-300">
+
                 {/* Form Header */}
-                <div className="mb-3 sm:mb-4 text-left">
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FACC15]/10 border border-[#FACC15]/20 text-[#FACC15] text-[10px] font-mono tracking-wider uppercase mb-1.5">
-                    Fashion Membership
+                <div className="mb-5 sm:mb-6 text-left">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FACC15]/10 border border-[#FACC15]/20 text-[#FACC15] text-[10px] font-mono tracking-wider uppercase mb-2">
+                    Member Access
                   </div>
-                  <h1 className="text-xl sm:text-2xl font-semibold tracking-tight text-white font-['Outfit']">
-                    Create Account
+                  <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white font-['Outfit']">
+                    Sign In
                   </h1>
-                  <p className="text-[11px] sm:text-xs text-zinc-400 mt-0.5 font-light leading-relaxed">
-                    Step into Rewoven. Discover curated styles, conscious fashion, and seamless shopping.
+                  <p className="text-[11px] sm:text-xs text-zinc-400 mt-1 font-light leading-relaxed">
+                    Welcome back. Enter your credentials to access your Rewoven account.
                   </p>
                 </div>
 
                 {/* Error Banner */}
                 {authError && (
-                  <div className="mb-3 p-2.5 rounded-lg bg-red-950/40 border border-red-800/50 text-red-300 text-xs flex items-start gap-2 animate-fadeIn">
+                  <div className="mb-4 p-2.5 rounded-lg bg-red-950/40 border border-red-800/50 text-red-300 text-xs flex items-start gap-2">
                     <svg className="w-4 h-4 shrink-0 text-red-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -192,7 +183,7 @@ export const Register = () => {
 
                 {/* Success Banner */}
                 {successMsg && (
-                  <div className="mb-3 p-2.5 rounded-lg bg-emerald-950/40 border border-emerald-800/50 text-emerald-300 text-xs flex items-start gap-2 animate-fadeIn">
+                  <div className="mb-4 p-2.5 rounded-lg bg-emerald-950/40 border border-emerald-800/50 text-emerald-300 text-xs flex items-start gap-2">
                     <svg className="w-4 h-4 shrink-0 text-emerald-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
@@ -200,66 +191,11 @@ export const Register = () => {
                   </div>
                 )}
 
-                {/* Form Elements */}
-                <form onSubmit={handleSubmit} className="space-y-2.5 sm:space-y-3" noValidate>
-                  
-                  {/* Responsive Row: Full Name & Contact Number */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
-                    {/* Full Name */}
-                    <div className="space-y-1">
-                      <label
-                        htmlFor="fullname"
-                        className="block text-[10px] sm:text-[11px] uppercase tracking-wider font-mono text-zinc-400"
-                      >
-                        Full Name
-                      </label>
-                      <div className="relative">
-                        <input
-                          id="fullname"
-                          name="fullname"
-                          type="text"
-                          value={formData.fullname}
-                          onChange={handleChange}
-                          placeholder="Jane Doe"
-                          className="w-full bg-[#09090b]/80 border border-zinc-800 focus:border-[#FACC15] text-zinc-100 placeholder-zinc-600 rounded-lg px-3 py-2 sm:py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#FACC15]/40 transition-all duration-200"
-                        />
-                        <div className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none">
-                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Contact Number */}
-                    <div className="space-y-1">
-                      <label
-                        htmlFor="contact"
-                        className="block text-[10px] sm:text-[11px] uppercase tracking-wider font-mono text-zinc-400"
-                      >
-                        Contact Number
-                      </label>
-                      <div className="relative">
-                        <input
-                          id="contact"
-                          name="contact"
-                          type="tel"
-                          value={formData.contact}
-                          onChange={handleChange}
-                          placeholder="9876543210"
-                          className="w-full bg-[#09090b]/80 border border-zinc-800 focus:border-[#FACC15] text-zinc-100 placeholder-zinc-600 rounded-lg px-3 py-2 sm:py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#FACC15]/40 transition-all duration-200"
-                        />
-                        <div className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none">
-                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                {/* Form */}
+                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5" noValidate>
 
                   {/* Email Address */}
-                  <div className="space-y-1">
+                  <div className="space-y-1.5">
                     <label
                       htmlFor="email"
                       className="block text-[10px] sm:text-[11px] uppercase tracking-wider font-mono text-zinc-400"
@@ -274,7 +210,9 @@ export const Register = () => {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="name@example.com"
-                        className="w-full bg-[#09090b]/80 border border-zinc-800 focus:border-[#FACC15] text-zinc-100 placeholder-zinc-600 rounded-lg px-3 py-2 sm:py-2.5 text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#FACC15]/40 transition-all duration-200"
+                        autoComplete="email"
+                        required
+                        className="w-full bg-[#09090b]/80 border border-zinc-800 focus:border-[#FACC15] text-zinc-100 placeholder-zinc-600 rounded-lg px-3 py-2.5 sm:py-3 pr-10 text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#FACC15]/40 transition-all duration-200"
                       />
                       <div className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none">
                         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -285,13 +223,21 @@ export const Register = () => {
                   </div>
 
                   {/* Password */}
-                  <div className="space-y-1">
-                    <label
-                      htmlFor="password"
-                      className="block text-[10px] sm:text-[11px] uppercase tracking-wider font-mono text-zinc-400"
-                    >
-                      Password
-                    </label>
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <label
+                        htmlFor="password"
+                        className="block text-[10px] sm:text-[11px] uppercase tracking-wider font-mono text-zinc-400"
+                      >
+                        Password
+                      </label>
+                      <a
+                        href="#forgot"
+                        className="text-[10px] sm:text-[11px] text-zinc-500 hover:text-[#FACC15] transition-colors duration-200 font-mono"
+                      >
+                        Forgot password?
+                      </a>
+                    </div>
                     <div className="relative">
                       <input
                         id="password"
@@ -300,7 +246,9 @@ export const Register = () => {
                         value={formData.password}
                         onChange={handleChange}
                         placeholder="••••••••"
-                        className="w-full bg-[#09090b]/80 border border-zinc-800 focus:border-[#FACC15] text-zinc-100 placeholder-zinc-600 rounded-lg px-3 py-2 sm:py-2.5 pr-10 text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#FACC15]/40 transition-all duration-200"
+                        autoComplete="current-password"
+                        required
+                        className="w-full bg-[#09090b]/80 border border-zinc-800 focus:border-[#FACC15] text-zinc-100 placeholder-zinc-600 rounded-lg px-3 py-2.5 sm:py-3 pr-10 text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#FACC15]/40 transition-all duration-200"
                       />
                       <button
                         type="button"
@@ -322,64 +270,6 @@ export const Register = () => {
                     </div>
                   </div>
 
-                  {/* isSeller Checkbox Card */}
-                  <div className="pt-0.5 sm:pt-1">
-                    <label
-                      htmlFor="isSeller"
-                      className={`group relative flex items-start gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-xl border cursor-pointer select-none transition-all duration-300 ${
-                        formData.isSeller
-                          ? "bg-[#FACC15]/5 border-[#FACC15]/40 shadow-[0_0_20px_rgba(250,204,21,0.06)]"
-                          : "bg-[#09090b]/50 border-zinc-800/80 hover:border-zinc-700"
-                      }`}
-                    >
-                      <div className="relative flex items-center justify-center mt-0.5">
-                        <input
-                          id="isSeller"
-                          name="isSeller"
-                          type="checkbox"
-                          checked={formData.isSeller}
-                          onChange={handleChange}
-                          className="sr-only peer"
-                        />
-                        <div
-                          className={`w-4 h-4 rounded-md border flex items-center justify-center transition-all duration-200 ${
-                            formData.isSeller
-                              ? "bg-[#FACC15] border-[#FACC15]"
-                              : "bg-zinc-900 border-zinc-700 group-hover:border-zinc-500"
-                          }`}
-                        >
-                          {formData.isSeller && (
-                            <svg
-                              className="w-3 h-3 text-black font-bold"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              strokeWidth={3}
-                            >
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                            </svg>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-xs font-medium text-white group-hover:text-zinc-100 transition-colors">
-                            Register as a Seller
-                          </span>
-                          {formData.isSeller && (
-                            <span className="text-[9px] uppercase font-mono px-1.5 py-0.2 rounded-full bg-[#FACC15]/20 text-[#FACC15] font-semibold tracking-wider">
-                              Merchant
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-[10px] sm:text-[11px] text-zinc-400 mt-0.5 leading-snug">
-                          Enable merchant privileges to list clothes, manage inventory & seller studio.
-                        </p>
-                      </div>
-                    </label>
-                  </div>
-
                   {/* Submit CTA */}
                   <div className="pt-1">
                     <button
@@ -393,11 +283,11 @@ export const Register = () => {
                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                           </svg>
-                          <span>Creating Account...</span>
+                          <span>Signing In...</span>
                         </>
                       ) : (
                         <>
-                          <span>Create Account</span>
+                          <span>Sign In</span>
                           <svg className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                           </svg>
@@ -405,12 +295,30 @@ export const Register = () => {
                       )}
                     </button>
                   </div>
+
+                  {/* Divider */}
+                  <div className="relative flex items-center gap-3 py-1">
+                    <div className="flex-1 h-px bg-zinc-800/80" />
+                    <span className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">or</span>
+                    <div className="flex-1 h-px bg-zinc-800/80" />
+                  </div>
+
+                  {/* Create Account Link */}
+                  <p className="text-center text-xs text-zinc-500">
+                    Don&apos;t have an account?{" "}
+                    <a
+                      href="/register"
+                      className="text-zinc-200 hover:text-[#FACC15] font-medium transition-colors duration-200 border-b border-transparent hover:border-[#FACC15] pb-0.5"
+                    >
+                      Create one
+                    </a>
+                  </p>
                 </form>
 
-                {/* Terms and Privacy info */}
-                <div className="mt-2.5 sm:mt-3 text-center">
+                {/* Terms */}
+                <div className="mt-4 sm:mt-5 text-center">
                   <p className="text-[10px] sm:text-[11px] text-zinc-500 leading-snug">
-                    By creating an account, you agree to Rewoven's{" "}
+                    By signing in, you agree to Rewoven's{" "}
                     <a href="#terms" className="text-zinc-400 hover:text-[#FACC15] transition-colors underline underline-offset-2">
                       Terms of Service
                     </a>{" "}
@@ -431,22 +339,16 @@ export const Register = () => {
       {/* Footer */}
       <footer className="w-full z-10 py-2.5 sm:py-3 px-4 sm:px-8 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-2 border-t border-zinc-900/80 text-[11px] text-zinc-500 shrink-0">
         <div>
-          <span>© {new Date().getFullYear()} Rewoven. Sustainable fashion & clothes.</span>
+          <span>© {new Date().getFullYear()} Rewoven. Sustainable fashion &amp; clothes.</span>
         </div>
         <div className="flex items-center gap-4 sm:gap-6">
-          <a href="#security" className="hover:text-zinc-300 transition-colors">
-            Security
-          </a>
-          <a href="#privacy" className="hover:text-zinc-300 transition-colors">
-            Privacy
-          </a>
-          <a href="#support" className="hover:text-zinc-300 transition-colors">
-            Concierge Support
-          </a>
+          <a href="#security" className="hover:text-zinc-300 transition-colors">Security</a>
+          <a href="#privacy" className="hover:text-zinc-300 transition-colors">Privacy</a>
+          <a href="#support" className="hover:text-zinc-300 transition-colors">Concierge Support</a>
         </div>
       </footer>
     </div>
   );
 };
 
-
+export default Login;
