@@ -74,29 +74,29 @@ export const login = async (req, res) => {
 
 export const googleAuthCallback = async (req, res) => {
 
-   const{id , emails , displayName, photos} = req.user;
+  const { id, emails, displayName, photos } = req.user;
 
-    const email = emails[0].value;
-    const ProfilePic = photos[0].value;
+  const email = emails[0].value;
+  const ProfilePic = photos[0].value;
 
-    let user = await userModel.findOne({ email });
+  let user = await userModel.findOne({ email });
 
-    if(!user){
-      await userModel.create({
-        email,
-        googleId : id,
-        fullname : displayName,
-      })
-    }
-
-
-    const token = jwt.sign({
-      id : user._id
-    }, config.JWT_SECRET , {
-      expiresIn : "7d"
+  if (!user) {
+    await userModel.create({
+      email,
+      googleId: id,
+      fullname: displayName,
     })
+  }
 
-    res.cookie("token" , token) 
 
-   res.redirect("http://localhost:5173/")
+  const token = jwt.sign({
+    id: user._id
+  }, config.JWT_SECRET, {
+    expiresIn: "7d"
+  })
+
+  res.cookie("token", token)
+
+  res.redirect("http://localhost:5173/")
 }
