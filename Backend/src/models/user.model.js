@@ -2,11 +2,32 @@ import mongoose from "mongoose"
 import bcrypt from "bcryptjs"
 
 const userSchema = new mongoose.Schema({
-  email : {type : String ,required : true , unique : true},
-  contact : { type : String , required : true },
-  fullname :{type : String ,required : true },
-  password : { type : String , required : true },
-  role : {type : String , enum: ["buyer" , "seller"], default : "buyer" }
+  email : {
+    type : String , 
+    required : true ,
+     unique : true
+    },
+  contact : { 
+    type : String ,
+     required : false
+     },
+  fullname :{
+    type : String, 
+    required : true 
+  },
+  password : { type : String , 
+    required : function () {
+      return !this.googleId;
+    }
+   },
+  role : {
+    type : String ,
+     enum: ["buyer" , "seller"],
+      default : "buyer" 
+    },
+  googleId:{
+    type : String 
+   }
 })
 
 userSchema.pre("save" , async function(){
