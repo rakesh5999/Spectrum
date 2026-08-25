@@ -380,6 +380,11 @@ export const Register = () => {
                     </label>
                   </div>
 
+                  <a href="/api/auth/google" className="text-[13px] text-[#FACC15] hover:text-[#ebd024] font-medium transition-colors underline">
+                    Continue with Google
+                  </a>
+
+
                   {/* Submit CTA */}
                   <div className="pt-1">
                     <button
