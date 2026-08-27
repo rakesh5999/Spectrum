@@ -82,7 +82,7 @@ export const googleAuthCallback = async (req, res) => {
   let user = await userModel.findOne({ email });
 
   if (!user) {
-    await userModel.create({
+    const user = await userModel.create({
       email,
       googleId: id,
       fullname: displayName,

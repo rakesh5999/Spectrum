@@ -34,3 +34,17 @@ export async function createProduct(req, res) {
 
 
 }
+
+
+
+export async function getSellerProduct(req, res){
+   const seller = req.user
+
+   const products = await productModel.find({seller : seller._id})
+
+   res.status(200).json({
+    message: " product fetched succesfully",
+    success: true,
+    products
+   })
+}
