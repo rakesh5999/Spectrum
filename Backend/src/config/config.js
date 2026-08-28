@@ -21,11 +21,11 @@ if(!process.env.GOOGLE_CLIENT_SECRET){
   }
 
 export const config = {
-  MONGO_URI : process.env.MONGO_URI?.trim(),
-  JWT_SECRET : process.env.JWT_SECRET?.trim(),
-  GOOGLE_CLIENT_ID : process.env.GOOGLE_CLIENT_ID?.trim(),
-  GOOGLE_CLIENT_SECRET : process.env.GOOGLE_CLIENT_SECRET?.trim(),
-  NODE_ENV : process.env.NODE_ENV?.trim() || "development",
-  IMAGEKIT_PRIVATE_KEY : process.env.IMAGEKIT_PRIVATE_KEY?.trim()
+  MONGO_URI : process.env.MONGO_URI,
+  JWT_SECRET : process.env.JWT_SECRET,
+  GOOGLE_CLIENT_ID : process.env.GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET : process.env.GOOGLE_CLIENT_SECRET,
+  NODE_ENV : process.env.NODE_ENV || "development",
+  IMAGEKIT_PRIVATE_KEY : process.env.IMAGEKIT_PRIVATE_KEY
 }
 

@@ -12,15 +12,17 @@ export const useAuth = () => {
 
     dispatch(setUser(data.user));
 
+    return data.user;
   }
 
+  async function handleLogin ({ email, password }) {
 
-     async function handleLogin ({ email, password }) {
+    const data = await login ({ email, password });
 
-      const data = await login ({ email, password });
-
-      dispatch(setUser(data.user));
-    }
+    dispatch(setUser(data.user));
+    
+    return data.user;
+  }
 
 
 

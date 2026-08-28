@@ -30,6 +30,6 @@ export const validateLoginUser = [
     body("email")
           .isEmail().withMessage("invalid email format"),
     body("password")
-          .isLength({ min: 6 }).withMessage("password must be at least 6 characters long"),
+          .notEmpty().withMessage("password is required"),
           validateRequest
 ]

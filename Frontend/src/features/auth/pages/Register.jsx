@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useAuth } from "../hook/useAuth";
 import { useNavigate } from 'react-router';
 import ContinueWithGoogle from '../components/ContinueWithGoogle';
-import editorialImage from '../../../../../images (1).jpg';
 
 const Register = () => {
     const { handleRegister } = useAuth();
@@ -51,37 +50,36 @@ const Register = () => {
             />
 
             <div
-                className="min-h-screen flex flex-col lg:flex-row selection:bg-[#C9A96E]/30"
+                className="min-h-screen lg:h-screen flex flex-col lg:flex-row selection:bg-[#C9A96E]/30 lg:overflow-hidden"
                 style={{ backgroundColor: '#fbf9f6', fontFamily: "'Inter', sans-serif" }}
             >
                 {/* ── LEFT: Editorial Image Panel ── */}
                 <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden" style={{ backgroundColor: '#f5f3f0' }}>
                     <img
-                        src={editorialImage}
-                        alt="Snitch Fashion Editorial"
+                        src="/rewoven_register.jpg"
+                        alt="Rewoven Fashion Editorial"
                         className="absolute inset-0 w-full h-full object-cover object-top"
-                        style={{ filter: 'brightness(0.97)' }}
                     />
                     <div
                         className="absolute inset-0"
-                        style={{ background: 'linear-gradient(to top, rgba(27,24,20,0.62) 0%, rgba(27,24,20,0.08) 45%, transparent 100%)' }}
+                        style={{ background: 'linear-gradient(to top, rgba(27,24,20,0.72) 0%, rgba(27,24,20,0.12) 50%, transparent 100%)' }}
                     />
-                    <div className="absolute inset-0 p-14 flex flex-col justify-between z-10">
+                    <div className="absolute inset-0 p-10 xl:p-14 flex flex-col justify-between z-10">
                         <span
                             className="text-sm font-medium tracking-[0.35em] uppercase"
                             style={{ fontFamily: "'Cormorant Garamond', serif", color: '#C9A96E' }}
                         >
-                            Snitch.
+                            Rewoven.
                         </span>
                         <div>
                             <p
-                                className="text-5xl xl:text-6xl font-light leading-[1.08] text-white mb-5"
+                                className="text-4xl xl:text-5xl font-light leading-[1.1] text-white mb-4"
                                 style={{ fontFamily: "'Cormorant Garamond', serif" }}
                             >
                                 Define your<br />
                                 <em>aesthetic.</em>
                             </p>
-                            <p className="text-sm font-light leading-relaxed max-w-xs" style={{ color: 'rgba(255,255,255,0.65)' }}>
+                            <p className="text-xs xl:text-sm font-light leading-relaxed max-w-xs" style={{ color: 'rgba(255,255,255,0.75)' }}>
                                 Join the exclusive movement of creators and brands redefining the modern fashion landscape.
                             </p>
                         </div>
@@ -90,31 +88,31 @@ const Register = () => {
 
                 {/* ── RIGHT: Form Panel ── */}
                 <div
-                    className="w-full lg:w-1/2 flex items-center justify-center min-h-screen px-8 sm:px-14 lg:px-20 py-16 overflow-y-auto"
+                    className="w-full lg:w-1/2 flex items-center justify-center min-h-screen lg:min-h-0 lg:h-full px-6 sm:px-12 lg:px-16 py-8 lg:py-4 overflow-y-auto"
                     style={{ backgroundColor: '#fbf9f6' }}
                 >
-                    <div className="w-full max-w-sm">
+                    <div className="w-full max-w-sm my-auto">
 
                         {/* Mobile brand mark */}
-                        <div className="lg:hidden mb-14">
+                        <div className="lg:hidden mb-6">
                             <span
-                                className="text-sm tracking-[0.35em] uppercase"
+                                className="text-sm tracking-[0.35em] uppercase font-semibold"
                                 style={{ fontFamily: "'Cormorant Garamond', serif", color: '#C9A96E' }}
                             >
-                                Snitch.
+                                Rewoven.
                             </span>
                         </div>
 
                         {/* Header */}
-                        <div className="mb-12">
+                        <div className="mb-6">
                             <p
-                                className="text-[10px] uppercase tracking-[0.22em] mb-4 font-medium"
+                                className="text-[10px] uppercase tracking-[0.22em] mb-2 font-medium"
                                 style={{ color: '#C9A96E' }}
                             >
-                                Welcome to Snitch
+                                Welcome to Rewoven
                             </p>
                             <h1
-                                className="text-[2.6rem] xl:text-5xl font-light leading-[1.1]"
+                                className="text-3xl xl:text-4xl font-light leading-tight"
                                 style={{ fontFamily: "'Cormorant Garamond', serif", color: '#1b1c1a' }}
                             >
                                 Elevate Your Style
@@ -122,10 +120,10 @@ const Register = () => {
                         </div>
 
                         {/* Form */}
-                        <form onSubmit={handleSubmit} className="flex flex-col gap-9">
+                        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
                             {/* Full Name */}
-                            <div className="flex flex-col gap-2">
+                            <div className="flex flex-col gap-1">
                                 <label
                                     htmlFor="reg-fullName"
                                     className="text-[10px] uppercase tracking-[0.18em] font-medium"
@@ -141,7 +139,7 @@ const Register = () => {
                                     onChange={handleChange}
                                     required
                                     placeholder="e.g. John Doe"
-                                    className="w-full bg-transparent outline-none py-3 text-sm transition-colors duration-300"
+                                    className="w-full bg-transparent outline-none py-2 text-sm transition-colors duration-300"
                                     style={inputStyle}
                                     onFocus={handleFocus}
                                     onBlur={handleBlur}
@@ -149,7 +147,7 @@ const Register = () => {
                             </div>
 
                             {/* Contact Number */}
-                            <div className="flex flex-col gap-2">
+                            <div className="flex flex-col gap-1">
                                 <label
                                     htmlFor="reg-contact"
                                     className="text-[10px] uppercase tracking-[0.18em] font-medium"
@@ -165,7 +163,7 @@ const Register = () => {
                                     onChange={handleChange}
                                     required
                                     placeholder="+91 98765 43210"
-                                    className="w-full bg-transparent outline-none py-3 text-sm transition-colors duration-300"
+                                    className="w-full bg-transparent outline-none py-2 text-sm transition-colors duration-300"
                                     style={inputStyle}
                                     onFocus={handleFocus}
                                     onBlur={handleBlur}
@@ -173,7 +171,7 @@ const Register = () => {
                             </div>
 
                             {/* Email */}
-                            <div className="flex flex-col gap-2">
+                            <div className="flex flex-col gap-1">
                                 <label
                                     htmlFor="reg-email"
                                     className="text-[10px] uppercase tracking-[0.18em] font-medium"
@@ -189,7 +187,7 @@ const Register = () => {
                                     onChange={handleChange}
                                     required
                                     placeholder="hello@example.com"
-                                    className="w-full bg-transparent outline-none py-3 text-sm transition-colors duration-300"
+                                    className="w-full bg-transparent outline-none py-2 text-sm transition-colors duration-300"
                                     style={inputStyle}
                                     onFocus={handleFocus}
                                     onBlur={handleBlur}
@@ -197,7 +195,7 @@ const Register = () => {
                             </div>
 
                             {/* Password */}
-                            <div className="flex flex-col gap-2">
+                            <div className="flex flex-col gap-1">
                                 <label
                                     htmlFor="reg-password"
                                     className="text-[10px] uppercase tracking-[0.18em] font-medium"
@@ -213,17 +211,17 @@ const Register = () => {
                                     onChange={handleChange}
                                     required
                                     placeholder="••••••••"
-                                    className="w-full bg-transparent outline-none py-3 text-sm transition-colors duration-300"
+                                    className="w-full bg-transparent outline-none py-2 text-sm transition-colors duration-300"
                                     style={inputStyle}
                                     onFocus={handleFocus}
                                     onBlur={handleBlur}
                                 />
                             </div>
 
-                            {/* Register as Seller — minimal checkbox */}
+                            {/* Register as Seller */}
                             <label
                                 htmlFor="reg-isSeller"
-                                className="flex items-center gap-4 cursor-pointer group"
+                                className="flex items-center gap-3 cursor-pointer group pt-1"
                             >
                                 <div className="relative flex-shrink-0">
                                     <input
@@ -234,7 +232,6 @@ const Register = () => {
                                         onChange={handleChange}
                                         className="peer sr-only"
                                     />
-                                    {/* Custom checkbox */}
                                     <div
                                         className="w-4 h-4 border transition-all duration-200 flex items-center justify-center peer-checked:border-[#C9A96E]"
                                         style={{
@@ -260,7 +257,7 @@ const Register = () => {
                             {/* Sign Up Button */}
                             <button
                                 type="submit"
-                                className="w-full py-4 text-[11px] uppercase tracking-[0.25em] font-medium transition-all duration-300 mt-2"
+                                className="w-full py-3 text-[11px] uppercase tracking-[0.25em] font-medium transition-all duration-300 mt-1 cursor-pointer"
                                 style={{ backgroundColor: '#1b1c1a', color: '#fbf9f6', fontFamily: "'Inter', sans-serif" }}
                                 onMouseEnter={e => {
                                     e.currentTarget.style.backgroundColor = '#C9A96E';
@@ -285,7 +282,7 @@ const Register = () => {
                             <ContinueWithGoogle />
 
                             {/* Footer Link */}
-                            <p className="text-center text-[11px]" style={{ color: '#B5ADA3' }}>
+                            <p className="text-center text-[11px] pt-1" style={{ color: '#B5ADA3' }}>
                                 Already have an account?{' '}
                                 <a
                                     href="/login"
