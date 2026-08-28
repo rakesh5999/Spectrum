@@ -16,3 +16,9 @@ export const getProduct = async () =>{
 
   return response.data
 }
+
+export const getAllProduct = async () =>{
+  const response = await productInstance.get("/")
+
+  return response.data
+}
