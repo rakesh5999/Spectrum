@@ -362,8 +362,7 @@ const Home = () => {
                   <div
                     key={product._id}
                     onClick={() => {
-                      setSelectedProduct(product);
-                      setActiveImageIdx(0);
+                      navigate (`/product/${product._id}`)
                     }}
                     className="group bg-white border border-[#e8e2d8] hover:border-[#C9A96E] transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] cursor-pointer"
                   >

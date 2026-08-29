@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import productModel from "../models/product.model.js";
 import { uploadFile } from "../services/storage.service.js";
 
@@ -56,5 +57,24 @@ export async function getAllProduct(req, res){
     message: "Products feteched successfully",
     success : true,
     products
+  })
+}
+
+export async function getProductDetails(req,res) {
+  const {id} = req.params
+  
+  const product = await productModel.findById(id)
+
+  if(!product){
+    return res.status(404).json({
+      message:"product not found ",
+      success: false
+    })
+  }
+
+  res.status(200).json({
+    message:"product details fetched succesfully",
+    success: true,
+    product
   })
 }
