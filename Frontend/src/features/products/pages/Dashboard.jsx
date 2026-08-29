@@ -263,8 +263,7 @@ const Dashboard = () => {
                     key={product._id}
                     className="group flex flex-col bg-white border border-[#e8e2d8] hover:border-[#C9A96E] transition-all duration-300 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] cursor-pointer"
                     onClick={() => {
-                      setSelectedProduct(product);
-                      setActiveImageIdx(0);
+                      navigate (`/seller/product/${product._id}`)
                     }}
                   >
                     {/* Product Image Box */}
