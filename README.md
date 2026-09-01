@@ -73,11 +73,12 @@ Authentication & Services
 
 🏗️ Project Structure
 
+```text
 Spectrum/
 │
 ├── Frontend/
-│   ├── src/
 │   ├── public/
+│   ├── src/
 │   └── package.json
 │
 ├── Backend/
@@ -87,22 +88,25 @@ Spectrum/
 │
 └── README.md
 
----
-
 🔄 How It Works
 
-        User
-          │
-          ▼
-   React Frontend
-          │
-          │ API Requests
-          ▼
-   Express Backend
-          │
-      ┌───┴───┐
-      ▼       ▼
-  MongoDB   ImageKit
+Spectrum follows a simple **frontend → backend → database** architecture.
+
+
+                    👤 User
+                      │
+                      ▼
+              ⚛️ React Frontend
+                      │
+                API Requests
+                      │
+                      ▼
+              🟢 Express Backend
+                      │
+              ┌───────┴────────┐
+              │                │
+              ▼                ▼
+          🍃 MongoDB        🖼️ ImageKit
 
 The frontend handles the user interface and application state, while the backend manages APIs, authentication, business logic, and database operations.
 
