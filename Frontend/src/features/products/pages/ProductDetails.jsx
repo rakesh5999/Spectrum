@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router';
+import { useParams, Link, data } from 'react-router';
 import { useProduct } from '../hook/useProduct';
 
 const ProductDetails = () => {
@@ -26,6 +26,7 @@ const ProductDetails = () => {
     if (productId) fetchProductDetails();
   }, [productId]);
 
+   
   const images = product?.images?.length
     ? product.images.map((img) => (typeof img === 'string' ? img : img.url))
     : ['https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=1200&auto=format&fit=crop&q=80'];

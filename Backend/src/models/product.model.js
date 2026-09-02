@@ -1,70 +1,70 @@
 import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema({
-  title:{
+  title: {
     type: String,
     required: true,
   },
-  description:{
+  description: {
     type: String,
     required: true
   },
-  seller:{
+  seller: {
     type: mongoose.Schema.Types.ObjectId,
-    ref:"user",
-    required:true
+    ref: "user",
+    required: true
   },
-  price:{
-    amount:{
+  price: {
+    amount: {
       type: Number,
       required: true
     },
-    currency:{
+    currency: {
       type: String,
       enum: ["USD", "EUR", "GBP", "JPY", "INR"],
       default: "INR"
     }
   },
-  images:[
+  images: [
     {
-    url:{
-      type: String,
-      required: true
+      url: {
+        type: String,
+        required: true
+      }
     }
-  }
-],
-variants:[
-  {
-    images: [
-      {
-        url:{
-          type: String,
+  ],
+  variants: [
+    {
+      images: [
+        {
+          url: {
+            type: String,
+            required: true
+          }
+        }
+      ],
+      stock: {
+        type: Number,
+        default: 0
+      },
+      attributes: {
+        type: Map,
+        of: String
+      },
+      price: {
+        amount: {
+          type: Number,
           required: true
+        },
+        currency: {
+          type: String,
+          enum: ["USD", "EUR", "GBP", "JPY", "INR"],
+          default: "INR"
         }
       }
-    ],
-    stock:{
-      type: Number,
-      default: 0
-    },
-    attributes:{
-      type: Map,
-      of: String
-    },
-    price:{
-      amount:{
-        type: Number,
-        required: true
-      },
-      currency:{
-        type: String,
-        enum: ["USD","EUR","GBP","JPY,INR"],
-        default: "INR"
-      }
     }
-  }
-]
-}, {timestamps:true} );
+  ]
+}, { timestamps: true });
 
 const productModel = mongoose.model("product", productSchema);
 

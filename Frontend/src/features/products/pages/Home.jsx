@@ -1,21 +1,17 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useProduct } from "../hook/useProduct";
 import { Link, useNavigate } from "react-router";
-import { setUser } from "../../auth/state/auth.slice";
 
 const Home = () => {
   const products = useSelector((state) => state.product.products) || [];
   const user = useSelector((state) => state.auth.user);
   const { handleGetAllProduct } = useProduct();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("newest");
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [activeImageIdx, setActiveImageIdx] = useState(0);
   const [cartCount, setCartCount] = useState(0);
   const [addedToast, setAddedToast] = useState(null);
 
@@ -362,7 +358,7 @@ const Home = () => {
                   <div
                     key={product._id}
                     onClick={() => {
-                      navigate (`/product/${product._id}`)
+                      navigate(`/product/${product._id}`);
                     }}
                     className="group bg-white border border-[#e8e2d8] hover:border-[#C9A96E] transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] cursor-pointer"
                   >
@@ -429,130 +425,6 @@ const Home = () => {
             </div>
           )}
         </main>
-
-        {/* Product Quick View / Detail Modal */}
-        {selectedProduct && (
-          <div
-            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-fade-in"
-            onClick={() => setSelectedProduct(null)}
-          >
-            <div
-              className="bg-[#fbf9f6] w-full max-w-4xl max-h-[90vh] overflow-y-auto border border-[#C9A96E]/40 shadow-2xl relative flex flex-col md:flex-row"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Close Button */}
-              <button
-                onClick={() => setSelectedProduct(null)}
-                className="absolute top-4 right-4 z-20 w-8 h-8 bg-white/80 backdrop-blur-sm border border-[#e8e2d8] flex items-center justify-center text-sm hover:bg-[#1b1c1a] hover:text-white transition-all"
-              >
-                ✕
-              </button>
-
-              {/* Modal Left: Images */}
-              <div className="md:w-1/2 p-6 flex flex-col gap-3 bg-[#f5f3f0]">
-                <div className="aspect-square bg-white border border-[#e8e2d8] overflow-hidden relative">
-                  <img
-                    src={
-                      selectedProduct.images && selectedProduct.images.length > 0
-                        ? getImageUrl(selectedProduct.images[activeImageIdx])
-                        : "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop&q=80"
-                    }
-                    alt={selectedProduct.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-
-                {/* Thumbnails */}
-                {selectedProduct.images && selectedProduct.images.length > 1 && (
-                  <div className="flex gap-2 overflow-x-auto pb-1">
-                    {selectedProduct.images.map((img, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => setActiveImageIdx(idx)}
-                        className={`w-14 h-14 shrink-0 border overflow-hidden transition-all ${
-                          activeImageIdx === idx
-                            ? "border-[#C9A96E] ring-1 ring-[#C9A96E]"
-                            : "border-[#e8e2d8] opacity-60 hover:opacity-100"
-                        }`}
-                      >
-                        <img
-                          src={getImageUrl(img)}
-                          alt="thumbnail"
-                          className="w-full h-full object-cover"
-                        />
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Modal Right: Details */}
-              <div className="md:w-1/2 p-6 sm:p-8 flex flex-col justify-between">
-                <div>
-                  <span
-                    className="text-[10px] tracking-[0.3em] uppercase text-[#C9A96E] font-semibold block mb-1"
-                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                  >
-                    Original Artwork & Design
-                  </span>
-                  <h3
-                    className="text-2xl sm:text-3xl font-light text-[#1b1c1a] mb-2"
-                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                  >
-                    {selectedProduct.title}
-                  </h3>
-
-                  <div className="text-xl font-medium text-[#1b1c1a] mb-6">
-                    {formatPrice(selectedProduct.price)}
-                  </div>
-
-                  <div className="border-t border-b border-[#e8e2d8] py-4 mb-6">
-                    <p className="text-xs uppercase tracking-widest text-[#8c8275] mb-2 font-medium">
-                      Description
-                    </p>
-                    <p className="text-xs sm:text-sm text-[#5a5043] leading-relaxed whitespace-pre-line">
-                      {selectedProduct.description || "No description provided."}
-                    </p>
-                  </div>
-
-                  <div className="text-[11px] text-[#8c8275] space-y-1 mb-6">
-                    <p>
-                      <strong>Product ID:</strong> {selectedProduct._id}
-                    </p>
-                    {selectedProduct.createdAt && (
-                      <p>
-                        <strong>Listed On:</strong>{" "}
-                        {new Date(selectedProduct.createdAt).toLocaleDateString(undefined, {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        })}
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                <div className="flex gap-3 pt-4">
-                  <button
-                    onClick={(e) => {
-                      handleAddToCart(e, selectedProduct);
-                      setSelectedProduct(null);
-                    }}
-                    className="flex-1 py-3.5 bg-[#1b1c1a] text-[#fbf9f6] text-[11px] uppercase tracking-[0.25em] font-medium hover:bg-[#C9A96E] hover:text-[#1b1c1a] transition-all"
-                  >
-                    Add to Bag
-                  </button>
-                  <button
-                    onClick={() => setSelectedProduct(null)}
-                    className="px-5 py-3.5 border border-[#d0c5b5] text-[#1b1c1a] text-[11px] uppercase tracking-widest hover:bg-[#f5f3f0]"
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* Footer */}
         <footer className="border-t border-[#e8e2d8] bg-[#f5f1eb] py-12 mt-16 text-center text-xs text-[#8c8275]">

@@ -11,8 +11,6 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("newest");
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [activeImageIdx, setActiveImageIdx] = useState(0);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -263,7 +261,7 @@ const Dashboard = () => {
                     key={product._id}
                     className="group flex flex-col bg-white border border-[#e8e2d8] hover:border-[#C9A96E] transition-all duration-300 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] cursor-pointer"
                     onClick={() => {
-                      navigate (`/seller/product/${product._id}`)
+                      navigate(`/seller/product/${product._id}`);
                     }}
                   >
                     {/* Product Image Box */}
@@ -334,120 +332,6 @@ const Dashboard = () => {
             </div>
           )}
         </main>
-
-        {/* Product Quick View / Detail Modal */}
-        {selectedProduct && (
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn"
-            onClick={() => setSelectedProduct(null)}
-          >
-            <div
-              className="bg-[#fbf9f6] border border-[#d0c5b5] max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Close Button */}
-              <button
-                onClick={() => setSelectedProduct(null)}
-                className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-[#1b1c1a] flex items-center justify-center text-sm shadow-sm transition-all"
-              >
-                ✕
-              </button>
-
-              <div className="grid grid-cols-1 md:grid-cols-2">
-                {/* Images Preview Slider */}
-                <div className="bg-[#f5f3f0] p-4 flex flex-col justify-between border-b md:border-b-0 md:border-r border-[#e8e2d8]">
-                  <div className="aspect-square w-full overflow-hidden bg-white mb-3">
-                    <img
-                      src={
-                        selectedProduct.images?.[activeImageIdx]
-                          ? getImageUrl(selectedProduct.images[activeImageIdx])
-                          : getImageUrl(null)
-                      }
-                      alt={selectedProduct.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-
-                  {/* Thumbnail Selector */}
-                  {selectedProduct.images?.length > 1 && (
-                    <div className="flex gap-2 overflow-x-auto pb-1">
-                      {selectedProduct.images.map((img, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => setActiveImageIdx(idx)}
-                          className={`w-14 h-14 shrink-0 border overflow-hidden transition-all ${
-                            activeImageIdx === idx
-                              ? "border-[#1b1c1a] scale-95"
-                              : "border-[#d0c5b5] opacity-70 hover:opacity-100"
-                          }`}
-                        >
-                          <img
-                            src={getImageUrl(img)}
-                            alt={`Thumbnail ${idx}`}
-                            className="w-full h-full object-cover"
-                          />
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                {/* Details Section */}
-                <div className="p-6 flex flex-col justify-between">
-                  <div>
-                    <span
-                      className="text-[10px] tracking-[0.25em] uppercase font-semibold text-[#C9A96E] block mb-1"
-                      style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                    >
-                      Product Details
-                    </span>
-                    <h2
-                      className="text-2xl font-light text-[#1b1c1a] mb-2"
-                      style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                    >
-                      {selectedProduct.title}
-                    </h2>
-
-                    <div className="text-xl font-medium text-[#1b1c1a] mb-4">
-                      {formatPrice(selectedProduct.price)}
-                    </div>
-
-                    <div className="mb-4">
-                      <span className="text-[10px] uppercase tracking-[0.15em] text-[#7A6E63] font-medium block mb-1">
-                        Description
-                      </span>
-                      <p className="text-sm text-[#4a4640] leading-relaxed whitespace-pre-line">
-                        {selectedProduct.description}
-                      </p>
-                    </div>
-
-                    <div className="pt-4 border-t border-[#e8e2d8] text-xs text-[#7A6E63] space-y-1">
-                      <p>
-                        <strong className="text-[#1b1c1a]">Product ID:</strong>{" "}
-                        <span className="font-mono text-[11px]">{selectedProduct._id}</span>
-                      </p>
-                      <p>
-                        <strong className="text-[#1b1c1a]">Listed On:</strong>{" "}
-                        {selectedProduct.createdAt
-                          ? new Date(selectedProduct.createdAt).toLocaleString()
-                          : "N/A"}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="pt-6 mt-6 border-t border-[#e8e2d8] flex gap-3">
-                    <button
-                      onClick={() => setSelectedProduct(null)}
-                      className="w-full py-2.5 text-[11px] uppercase tracking-[0.2em] border border-[#1b1c1a] hover:bg-[#1b1c1a] hover:text-white transition-colors"
-                    >
-                      Close
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </>
   );
