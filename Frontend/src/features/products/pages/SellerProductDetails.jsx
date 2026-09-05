@@ -213,7 +213,7 @@ export default function SellerProductDetails() {
         <header className="sticky top-0 shrink-0 h-14 px-6 lg:px-10 flex items-center justify-between border-b border-[#e8e2d8] bg-[#fbf9f6]/95 backdrop-blur-sm z-20">
           <Link to="/seller/dashboard" className="flex flex-col">
             <span className="text-2xl font-light tracking-tight hover:text-[#C9A96E] transition-colors" style={{ fontFamily: "'Cormorant Garamond',serif" }}>
-              Snitich.
+              Rewoven.
             </span>
             <span className="text-[8px] uppercase tracking-[0.3em] text-[#8c8275] -mt-0.5">Seller Studio</span>
           </Link>

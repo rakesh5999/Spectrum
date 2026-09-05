@@ -119,7 +119,7 @@ export async function addProductVariants(req, res) {
 
   await product.save()
 
-  return res.status(201).json({
+  return res.status(200).json({
     message: " Product variant added successfully",
     success: true,
     product
